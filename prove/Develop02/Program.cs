@@ -1,5 +1,11 @@
 using System;
 using System.Data;
+// ----------------------
+// EXCEEDING REQUIREMENTS: 
+// Changed file format for saving to JSON
+// Added various error handling
+// Polished terminal to be more readable and clear
+// ----------------------
 
 class Program
 {
@@ -9,6 +15,7 @@ class Program
 
         string command = "0"; // number to specify what the program should do
         List<List<string>> currentFileEntries = new List<List<string>>{}; // List of list of strings. To hold multiple entries for displaying, saving, and loading
+        Journal journal1 = new Journal(); // Create a new Journal instance
 
         while (command != "5")
         {
@@ -33,7 +40,7 @@ class Program
                 entry1._currentEntry.Add(theCurrentTime.ToShortDateString()); // Adds date to current entry list
                 
                 currentFileEntries.Add(entry1._currentEntry); // Adds current entry to list of entries
-                Console.WriteLine("");
+                Console.WriteLine("Entry Recorded!\n");
             }
 
             else if (command == "2") // Displays current file/session
@@ -44,24 +51,26 @@ class Program
 
             else if (command == "3") // Loads file
             {
-                // entry1.DisplayEntry();           
+                Console.Write("Enter the filename to load: ");
+                string fileName = Console.ReadLine();
+                journal1.LoadFromFile(ref currentFileEntries, fileName); // Load entries into currentFileEntries
             }
 
-            else if (command == "4") // Save File
+            else if (command == "4") // Saves file
             {
-                // entry1.DisplayEntry();           
+                Console.Write("Enter the filename to save to: ");
+                string fileName = Console.ReadLine();
+                journal1.SaveToFile(currentFileEntries, fileName); // Save currentFileEntries to the specified file
             }
 
-            else if (command == "5") // Quit Program
+            else if (command == "5") // Quits Program
             {
                 Console.WriteLine("Thank you for journaling today. Goodbye!"); // Goodbye :)
             }
 
             else // Invalid input handling
             {
-                Console.WriteLine("");
-                Console.WriteLine("Invalid input. Please enter a number from 1-5");           
-                Console.WriteLine("");
+                Console.WriteLine("\nInvalid input. Please enter a number from 1-5\n");           
             }
         }
     }

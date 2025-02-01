@@ -6,10 +6,8 @@ public class Entry
     {
         foreach (var entry in listOfEntries) // repeats for every entry
         {
-            Console.WriteLine($"Date: {entry[2]}");
-            Console.WriteLine($"Your prompt was: {entry[0]}");
-            Console.WriteLine($"You wrote: {entry[1]}");
-            Console.WriteLine("");
+            Console.WriteLine
+                ($"Date: {entry[2]}\nYour prompt was: {entry[0]}\nYou wrote: {entry[1]}\n");
         }
     } 
 }
