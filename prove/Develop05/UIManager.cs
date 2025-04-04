@@ -69,7 +69,7 @@ class UIManager
     private void AddGoal()
     {
         Console.Write("Enter goal type ('1' for Simple, '2' for Eternal, '3' for Checklist): ");
-        string input = Console.ReadLine().ToLower();
+        string input = Console.ReadLine();
 
         Console.Write("Enter goal name: ");
         string name = Console.ReadLine();

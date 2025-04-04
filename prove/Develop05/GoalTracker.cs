@@ -2,6 +2,9 @@ class GoalTracker
 {
     private List<Goal> goals = new List<Goal>();
     private int totalScore = 0;
+    private int level = 1;
+    private int experience = 0;
+    private int[] levelUps = {25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 750, 1000, 1500};
 
     public void AddGoal(Goal goal)
     {
@@ -15,11 +18,22 @@ class GoalTracker
             if (goal.MatchesName(goalName))
             {
                 goal.RecordEvent(ref totalScore);
+                experience += goal.GetPoints();
+                CheckLevelUp();
                 Console.WriteLine("Recorded progress for the goal.");
                 return;
             }
         }
         Console.WriteLine("Goal not found.");
+    }
+
+    public void CheckLevelUp()
+    {
+        while (level - 1 < levelUps.Length && experience >= levelUps[level - 1])
+        {
+            level++;
+            Console.WriteLine($"Congrats! You are now level {level}!");
+        }
     }
 
     public void DisplayGoals()
@@ -34,13 +48,14 @@ class GoalTracker
     public void DisplayScore()
     {
         Console.WriteLine($"Total Score: {totalScore}");
+        Console.WriteLine($"Level: {level} | Experience: {experience}/{(level - 1 < levelUps.Length ? levelUps[level - 1] : "MAX")}");
     }
 
     public void SaveProgress(string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
-            writer.WriteLine(totalScore);
+            writer.WriteLine($"{totalScore}, {level}, {experience}");
             foreach (Goal goal in goals)
             {
                 writer.WriteLine(goal.GetSaveData());
@@ -61,7 +76,10 @@ class GoalTracker
 
         using (StreamReader reader = new StreamReader(filename))
         {
-            totalScore = int.Parse(reader.ReadLine());
+            string[] mainInfo = reader.ReadLine().Split(',');
+            totalScore = int.Parse(mainInfo[0]);
+            level = int.Parse(mainInfo[1]);
+            experience = int.Parse(mainInfo[2]);
 
             string line;
             while ((line = reader.ReadLine()) != null)

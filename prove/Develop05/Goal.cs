@@ -15,6 +15,11 @@ abstract class Goal
         _points = points;
     }
 
+    public int GetPoints()
+    {
+        return _points;
+    }
+
     public abstract void RecordEvent(ref int totalScore);
     public abstract string GetDisplayText();
     public abstract string GetSaveData();
