@@ -4,6 +4,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop05 World!");
+        GoalTracker tracker = new GoalTracker();
+        UIManager uiManager = new UIManager(tracker);
+
+        uiManager.ShowMenu();
+
+        Console.WriteLine("Goodbye!");
     }
 }
